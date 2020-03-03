@@ -1,36 +1,51 @@
 import React, { Component } from 'react'
 import './Filter.css'
 
-class Filter extends Component {
+function Filter(props) {
 
-    changeSelection(value) {
-        if (value === "None") {
-            this.props.changeHandler(null);
-        } else {
+    // render() {
+    return (
+        <div className="filter-bar">
+            <label>Print Type:</label>
 
-            const country = this.props.countries.find(country => country.name === value);
-            this.props.changeHandler(country);
-        }
-    }
-
-    render() {
-        return (
-            <div className="filter-bar">
-                <label>Print Type:</label>
-                <select>
-                    <option value="None">
-                        All
+            <select onChange={props.pChange}>
+                <option value="all">
+                    All
                     </option>
-                </select>
-                <label>Book Type:</label>
-                <select>
-                    <option value="None">
-                        No Filter
+                <option value="books">
+                    Books
                     </option>
-                </select>
-            </div>
-        )
-    }
+                <option value="magazine">
+                    Magazine
+                    </option>
+            </select>
+
+            <label>Book Type:</label>
+
+            <select onChange={props.tChange}>
+                <option value="None">
+                    No Filter
+                    </option>
+                <option value="partial">
+                    Partial
+                    </option>
+                <option value="full">
+                    Full
+                    </option>
+                <option value="free-ebooks">
+                    Free-ebooks
+                    </option>
+                <option value="paid-ebooks">
+                    Paid-ebooks
+                    </option>
+                <option value="ebooks">
+                    Ebooks
+                    </option>
+
+            </select>
+        </div>
+    )
 }
+// }
 
 export default Filter;

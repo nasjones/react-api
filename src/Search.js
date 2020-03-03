@@ -1,20 +1,22 @@
 import React, { Component } from 'react'
 import './Search.css'
 
-class Search extends Component {
+// class Search extends Component {
+function Search(props) {
 
-    render() {
-        return (
-            <div className="searchBar">
-                <form>
-                    <label htmlFor="book-box">Search:</label>
-                    <input type="text" name="book-box" />
-                    <button type="submit">Search</button>
-                </form>
+    // render() {
+    // console.log(props)
+    return (
+        <div className="searchBar">
+            <form onSubmit={props.qClick}>
+                <label htmlFor="book-box">Search:</label>
+                <input type="text" name="book-box" onChange={props.sChange} />
+                <button type="submit" value="">Search</button>
+            </form>
 
-            </div>
-        )
-    }
+        </div>
+    )
+    // }
 
 }
 
@@ -22,4 +24,4 @@ class Search extends Component {
 
 
 
-export default Search
+export default Search;
