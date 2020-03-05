@@ -1,18 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './Book.css';
 
 
 function Book(props) {
 
-    // render() {
     return (
-        <li>
+        <li >
             <h1 className="Book">{props.title}</h1>
             <img src={props.picLink} />
-            <p>Author: {props.author}</p>
+            <p>Author: {props.author.join(', ')}</p>
         </li>
     )
-    // }
+
 
 }
 

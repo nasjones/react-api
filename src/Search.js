@@ -1,11 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './Search.css'
 
-// class Search extends Component {
+
 function Search(props) {
 
-    // render() {
-    // console.log(props)
     return (
         <div className="searchBar">
             <form onSubmit={props.qClick}>
@@ -16,7 +14,6 @@ function Search(props) {
 
         </div>
     )
-    // }
 
 }
 

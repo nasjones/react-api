@@ -1,9 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './Filter.css'
 
 function Filter(props) {
 
-    // render() {
     return (
         <div className="filter-bar">
             <label>Print Type:</label>
@@ -46,6 +45,6 @@ function Filter(props) {
         </div>
     )
 }
-// }
+
 
 export default Filter;
