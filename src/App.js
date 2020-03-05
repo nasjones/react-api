@@ -9,7 +9,8 @@ class App extends Component {
     query: "",
     print: "All",
     bookType: "",
-    bookList: "",
+    submit: false,
+    books: "nothing",
     url: "",
     error: ""
   }
@@ -24,7 +25,6 @@ class App extends Component {
 
   searchChange = e => {
     let output = e.target.value.split(' ').join('+');
-
     this.setState({ query: output })
   }
 
@@ -34,60 +34,41 @@ class App extends Component {
     e.preventDefault();
     console.log(this.state.query)
     this.setState({ url: "https://www.googleapis.com/books/v1/volumes?q=" + this.state.query + "&key=AIzaSyDCfnHQtyf5xVMfBjJRAfQhOmh91u26eGw" })
-
-    fetch(this.state.url)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Something went wrong, please try again later');
-        }
-        return response.json();
-      })
-      .then(data => {
-        let list = <Booklist
-          bookObj={data.items}
-        />
-
-        console.log(list)
-
-        this.setState({
-          bookList: list
-        })
-
-        console.log(this.state.bookList)
-        return (data.items.map(overview => {
-
-          console.log("boi")
-          console.log(overview.volumeInfo.thumbnail)
-
-        })
-        )
-      })
-      .catch(err => {
-
-        alert(err)
-      });
+    this.setState({ submit: true })
+    let out = <Booklist
+      query={this.state.query}
+      print={this.state.print}
+      bookType={this.state.bookType}
+      url={this.state.url}
+      submit={this.state.submit}
+    />
+    console.log(out)
+    this.setState({
+      books: out
+    })
 
   }
 
 
   render() {
+
     return (
-      <div className="App" key="main">
+      <div className="App">
         <header className="App-header">
           <h1>Google Book Search</h1>
         </header>
-
         <Search
           sChange={this.searchChange}
           qClick={this.submit} />
-
         <Filter
           tChange={this.typeChange}
           pChange={this.printChange} />
 
-        {this.state.bookList}
+        {this.state.books}
       </div>
     );
+
+
   }
 }
 
