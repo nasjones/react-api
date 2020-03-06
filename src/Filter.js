@@ -8,13 +8,13 @@ function Filter(props) {
             <label>Print Type:</label>
 
             <select onChange={props.pChange}>
-                <option value="all">
+                <option value="">
                     All
                     </option>
                 <option value="books">
                     Books
                     </option>
-                <option value="magazine">
+                <option value="magazines">
                     Magazine
                     </option>
             </select>
@@ -22,7 +22,7 @@ function Filter(props) {
             <label>Book Type:</label>
 
             <select onChange={props.tChange}>
-                <option value="None">
+                <option value="">
                     No Filter
                     </option>
                 <option value="partial">

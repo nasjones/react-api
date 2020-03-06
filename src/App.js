@@ -7,46 +7,69 @@ import Booklist from './Booklist'
 class App extends Component {
   state = {
     query: "",
-    print: "All",
+    print: "",
     bookType: "",
     submit: false,
-    books: "nothing",
+    books: "",
     url: "",
     error: ""
   }
 
   typeChange = e => {
-    this.setState({ bookType: e.target.value })
+    let output = ""
+    const val = e.target.value
+    if (val === "")
+      this.setState({ bookType: output })
+    else {
+      output = "&filter=" + val
+      this.setState({ bookType: output })
+    }
+    this.setState({ url: "https://www.googleapis.com/books/v1/volumes?q=" + this.state.query + this.state.print + output + "&key=AIzaSyDCfnHQtyf5xVMfBjJRAfQhOmh91u26eGw" })
   }
 
   printChange = e => {
-    this.setState({ print: e.target.value })
+    let output = ""
+    const val = e.target.value
+    if (val === "all")
+      this.setState({ print: output })
+    else {
+      output = "&printType=" + val
+      this.setState({ print: output })
+    }
+
+    this.setState({ url: "https://www.googleapis.com/books/v1/volumes?q=" + this.state.query + output + this.state.bookType + "&key=AIzaSyDCfnHQtyf5xVMfBjJRAfQhOmh91u26eGw" })
   }
 
   searchChange = e => {
     let output = e.target.value.split(' ').join('+');
     this.setState({ query: output })
+    this.setState({ url: "https://www.googleapis.com/books/v1/volumes?q=" + output + this.state.print + this.state.bookType + "&key=AIzaSyDCfnHQtyf5xVMfBjJRAfQhOmh91u26eGw" })
   }
-
-
 
   submit = e => {
     e.preventDefault();
-    console.log(this.state.query)
-    this.setState({ url: "https://www.googleapis.com/books/v1/volumes?q=" + this.state.query + "&key=AIzaSyDCfnHQtyf5xVMfBjJRAfQhOmh91u26eGw" })
-    this.setState({ submit: true })
-    let out = <Booklist
-      query={this.state.query}
-      print={this.state.print}
-      bookType={this.state.bookType}
-      url={this.state.url}
-      submit={this.state.submit}
-    />
-    console.log(out)
-    this.setState({
-      books: out
-    })
-
+    console.log(this.state.url)
+    fetch(this.state.url)
+      .then(response => {
+        console.log(response.ok)
+        if (!response.ok) {
+          throw new Error('Something went wrong, please try again later');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+        return (<Booklist
+          books={data}
+        />)
+      })
+      .then(output => {
+        console.log(output)
+        this.setState({ books: output })
+      })
+      .catch(err => {
+        return (err)
+      })
   }
 
 
@@ -60,6 +83,7 @@ class App extends Component {
         <Search
           sChange={this.searchChange}
           qClick={this.submit} />
+
         <Filter
           tChange={this.typeChange}
           pChange={this.printChange} />
